@@ -3,3 +3,5 @@ lambdas/getSignedS3Url/package-lock.json
 lambdas/getSignedS3Url/getSignedS3Url.zip
 frontend/animal-crossing/src/environments/environment.prod.ts
 frontend/animal-crossing/src/environments/environment.ts
+lambdas/verifyUserToken/node_modules/
+lambdas/verifyUserTokenPy/package/
