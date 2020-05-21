@@ -53,11 +53,11 @@ module.exports = {
                         throw new Error('claim use is not id');
                     }
 
-                    console.log('claim:', JSON.stringify(claim));
                     result['userName'] = claim['cognito:username'];
                     result['email'] = claim['email'];
                     result['sub'] = claim['sub'];
                     result['emailIsVerified'] = claim['email_verified'];
+                    result['groups'] = claim['cognito:groups'][0];
 
                     callback(null, result)
                 });
