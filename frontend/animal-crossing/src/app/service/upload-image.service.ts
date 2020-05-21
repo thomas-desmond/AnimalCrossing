@@ -17,7 +17,14 @@ export class UploadImageService {
     // Validate user token
 
   private getSignedS3Url(): Observable<any> {
-    return this.http.get<s3SignedUrl>(this.getS3SignedUrlEndpoint);
+
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'PUT AUTH HERE'
+      }),
+    };
+
+    return this.http.get<s3SignedUrl>(this.getS3SignedUrlEndpoint, requestOptions);
   }
 
 
