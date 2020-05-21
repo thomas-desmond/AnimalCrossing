@@ -21,11 +21,10 @@ export class UploadImageService {
 
   private getSignedS3Url(): Observable<any> {
 
-    const cookie = this.cookieService.get(Constants.cookieTokenName);
-    console.log('COPOOOOKIE', cookie);
+    const token = this.cookieService.get(Constants.cookieTokenName);
     const requestOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'PUT AUTH HERE'
+        'Authorization': token
       }),
     };
 
