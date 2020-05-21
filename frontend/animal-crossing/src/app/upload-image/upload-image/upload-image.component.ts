@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UploadImageService } from 'src/app/service/upload-image.service';
+import { UploadImageService } from 'src/services/upload-image.service';
 import { Directive, Output, Input, EventEmitter, HostBinding, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 

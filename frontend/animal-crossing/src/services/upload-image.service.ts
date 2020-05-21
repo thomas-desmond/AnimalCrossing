@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { s3SignedUrl } from '../models/s3SignedUrl';
-import { environment } from '../../environments/environment'
+import { s3SignedUrl } from '../app/models/s3SignedUrl';
+import { environment } from '../environments/environment'
 import { CookieService } from 'ngx-cookie-service';
-import { Constants } from '../constants/constants';
+import { Constants } from '../app/constants/constants';
 
 @Injectable({
   providedIn: 'root'
