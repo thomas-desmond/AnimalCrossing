@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Constants } from 'src/app/constants/constants';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable, Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: "root",
@@ -12,6 +12,7 @@ export class AuthenticationService {
   public isAuthenticated = new Subject();
 
   constructor(
+    private router: Router,
     private cookieService: CookieService
     ) {
     setInterval(() => {
@@ -29,6 +30,7 @@ export class AuthenticationService {
 
   public logout() {
     this.cookieService.delete(Constants.cookieTokenName);
+    this.router.navigate(['/']);
   }
 
 }
