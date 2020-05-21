@@ -1,6 +1,9 @@
 <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)" [style.height]="fileToUpload ? '100px' : '250px'">
-    <input hidden type="file" #fileInput id="fileInput" (change)="handleFileInput($event.target.files)" accept=".jpg,.jpeg,.png">
+    <input hidden type="file" #fileInput id="fileInput" (change)="handleFileInput($event.target.files)" [accept]="supportedExstensions.join(',')">
 </div>
+
+<h4 class="file-upload-error" *ngIf="tooManyFilesSelected">Too many files selected</h4>
+<h4 class="file-upload-error" *ngIf="unsupportedFile">File extension not supported</h4>
 
 <div class="image-preview" *ngIf="fileToUpload">
     <img id="uploadPreview"/>
