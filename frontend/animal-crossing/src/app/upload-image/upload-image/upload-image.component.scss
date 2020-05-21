@@ -1,0 +1,33 @@
+
+.upload-form{
+    text-align: center;
+    width: 90%;
+    margin:auto;
+}
+
+.image-preview{
+    height: 250px;
+    width: 50%;
+    margin: 20px auto;
+}
+
+img{
+    width: 100%;
+}
+
+.uploadfilecontainer {
+    background-image: url("../../../assets/icons/upload.svg");
+    background-repeat: no-repeat;
+    background-size: 100px;
+    background-position: center;
+    width: 50%;
+    margin: 20px auto;
+    border: 2px dashed green;
+    border-radius: 10px;
+}
+
+.uploadfilecontainer:hover {
+    cursor: pointer;
+    background-color: #9ecbec !important;
+    opacity: 0.8;
+}
