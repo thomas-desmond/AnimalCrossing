@@ -12,6 +12,7 @@ export class UploadImageComponent implements OnInit {
 
   public selectedFile = false;
   public uploadImageForm: FormGroup;
+  public fileToUpload: File;
 
   constructor(
     private fb: FormBuilder,
@@ -28,11 +29,8 @@ export class UploadImageComponent implements OnInit {
     });
   }
 
-  private fileToUpload: File;
-
   public handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
-    console.log('this.fileToUpload', this.fileToUpload);
     var oFReader = new FileReader();
     //@ts-ignore
     oFReader.readAsDataURL(document.getElementById("fileInput").files[0]);
@@ -44,7 +42,6 @@ export class UploadImageComponent implements OnInit {
   }
 
   public uploadImage() {
-    // this.uploadImageService.uploadImage(this.fileToUpload);
-
+    this.uploadImageService.uploadImage(this.fileToUpload);
   }
 }
