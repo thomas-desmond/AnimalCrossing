@@ -1,8 +1,4 @@
-
-
-const adminLambdas = [
-
-];
+const adminLambdas = [];
 
 
 const getPolicy = function (principalId, resource, cognitoUserData) {
@@ -10,16 +6,11 @@ const getPolicy = function (principalId, resource, cognitoUserData) {
         return resource.includes(lambdaName)
     })
     if (adminResource) {
-
-        const userIsAdmin = cognitoUserData.some(groups => {
-            return groups === "Admin_User"
-        })
-
-        if (userIsAdmin) {
+        if (cognitoUserData['groups'] === "Admin_User") {
             return generateAllow(principalId, resource, cognitoUserData)
         }
         return generateDeny(principalId, resource, cognitoUserData)
-    } 
+    }
     return generateAllow(principalId, resource, cognitoUserData)
 }
 
@@ -52,7 +43,7 @@ const generatePolicy = function (principalId, effect, resource, cognitoUserData)
 }
 
 
-module.exports = { 
+module.exports = {
     genaratePolicy: (resource, cognitoData, callback) => {
         callback(null, getPolicy('me', resource, cognitoData))
     }

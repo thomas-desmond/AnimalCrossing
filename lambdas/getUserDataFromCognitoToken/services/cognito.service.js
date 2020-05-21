@@ -66,7 +66,7 @@ module.exports = {
 
         }
         catch (error) {
-            callback(null, result)
+            callback(error)
         }
     }
 }
