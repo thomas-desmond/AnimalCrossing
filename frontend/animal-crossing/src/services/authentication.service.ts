@@ -1,12 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { Constants } from 'src/app/constants/constants';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthenticationService {
-  constructor() { }
+  constructor() {}
 
-  public verifyUserCode(code: string) {
-    console.log('handle the code here in service ', code);
+  public saveUserTokenCookie(tokenObj: any) {
+    const expirationDate = new Date(
+      Date.now() + +tokenObj["expires_in"]
+    ).toUTCString();
+
+    document.cookie = `${Constants.cookieTokenName}=${tokenObj["id_token"]} ; expires = ${expirationDate}`;
   }
 }

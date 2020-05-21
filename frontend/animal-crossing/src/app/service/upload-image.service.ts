@@ -3,6 +3,8 @@ import { of, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { s3SignedUrl } from '../models/s3SignedUrl';
 import { environment } from '../../environments/environment'
+import { CookieService } from 'ngx-cookie-service';
+import { Constants } from '../constants/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +13,16 @@ export class UploadImageService {
   private getS3SignedUrlEndpoint = environment.apigatewayBaseUrl + '/get-signed-s3-url';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private cookieService: CookieService,
   ) { }
 
     // Validate user token
 
   private getSignedS3Url(): Observable<any> {
 
+    const cookie = this.cookieService.get(Constants.cookieTokenName);
+    console.log('COPOOOOKIE', cookie);
     const requestOptions = {
       headers: new HttpHeaders({
         'Authorization': 'PUT AUTH HERE'

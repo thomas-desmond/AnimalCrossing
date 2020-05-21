@@ -21,31 +21,40 @@ export class UserVerificationComponent implements OnInit {
   }
 
   handleUserAuthentication() {
-    this.route.queryParams
+    this.route.fragment
       .pipe(
-        map((params) => this.redirectIfNoCode(params)),
-        tap((code: string) => this.authenticationService.verifyUserCode(code)),
+        map((params) => this.redirectIfUnsuccessfulLogin(params)),
+        tap((tokenObj: string) => this.authenticationService.saveUserTokenCookie(tokenObj)),
         catchError((err) => this.userAuthenticationErrorHandling(err))
       )
       .subscribe((params) => console.log(params));
   }
 
-  private userAuthenticationErrorHandling(error: Error){
+  private userAuthenticationErrorHandling(error: Error) {
     this.router.navigateByUrl("/");
-    return '';
+    return "";
   }
 
-  private redirectIfNoCode(params: any) {
-    console.log("params");
+  private redirectIfUnsuccessfulLogin(fragmentsParams: string) {
+    const tokenObj = this.getFragmentsAsObject(fragmentsParams)
 
-    const code = params["code"];
-    if (!code) {
-      console.log("inside no code");
+    const token = tokenObj["id_token"];
+    const expDate = tokenObj["expires_in"];
 
+    if (!token || !expDate) {
       throw new Error("Missing code");
     }
-    console.log("return code ,", code);
 
-    return code;
+    return tokenObj;
+  }
+
+  private getFragmentsAsObject(fragmentsString: string) {
+    const fragments = fragmentsString.split('&');
+    const fragmentSplitUp = fragments.map(kv => kv.split('='));
+    const fragmentObj = {};
+    fragmentSplitUp.forEach(element => {
+      fragmentObj[element[0]] = element[1];
+    });
+    return fragmentObj;
   }
 }
