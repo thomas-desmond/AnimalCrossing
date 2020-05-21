@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NavMenuComponent } from './nav-menu.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [NavMenuComponent],
@@ -19,6 +20,7 @@ import { NavMenuComponent } from './nav-menu.component';
     MatButtonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    RouterModule,
     MatInputModule
   ],
   exports: [NavMenuComponent],
