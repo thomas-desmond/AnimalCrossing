@@ -27,7 +27,9 @@ export class UserVerificationComponent implements OnInit {
         tap((tokenObj: string) => this.authenticationService.saveUserTokenCookie(tokenObj)),
         catchError((err) => this.userAuthenticationErrorHandling(err))
       )
-      .subscribe(() => { });
+      .subscribe(() => {
+        this.router.navigateByUrl("/");
+      });
   }
 
   private userAuthenticationErrorHandling(error: Error) {
