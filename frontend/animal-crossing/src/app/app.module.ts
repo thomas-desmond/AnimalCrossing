@@ -8,7 +8,7 @@ import { UploadImageModule } from './upload-image/upload-image/upload-image.modu
 import { NavMenuModule } from './nav-menu/nav-menu.module';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
 import { CookieService } from 'ngx-cookie-service';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -20,9 +20,10 @@ import { CookieService } from 'ngx-cookie-service';
     AppRoutingModule,
     BrowserAnimationsModule,
     UploadImageModule,
-    NavMenuModule
+    NavMenuModule,
+    MatProgressSpinnerModule
   ],
-  providers: [ CookieService ],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
