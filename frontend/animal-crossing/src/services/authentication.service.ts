@@ -1,12 +1,20 @@
 import { Injectable } from "@angular/core";
 import { Constants } from 'src/app/constants/constants';
 import { CookieService } from 'ngx-cookie-service';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthenticationService {
-  constructor(private cookieService: CookieService) {}
+
+  public isAuthenticated = new Subject();
+  
+  constructor(private cookieService: CookieService) {
+    setInterval(() => {
+      this.isAuthenticated.next(this.cookieService.check(Constants.cookieTokenName));
+    }, 1000)
+  }
 
   public saveUserTokenCookie(tokenObj: any) {
     const expirationDate = new Date(
