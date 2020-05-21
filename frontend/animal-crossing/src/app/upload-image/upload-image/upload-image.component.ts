@@ -70,8 +70,6 @@ export class UploadImageComponent implements OnInit {
     }
 
     if (!this.fileIsSupported(files['0'])) {
-      console.log('extension not supported');
-
       const uploadPreview = document.getElementById("uploadPreview");
       if (uploadPreview) {
         //@ts-ignore
@@ -82,7 +80,7 @@ export class UploadImageComponent implements OnInit {
       return
     }
 
-    this.tooManyFilesSelected = false;
+    this.resetFlags();
     this.fileToUpload = files.item(0);
 
     const oFReader = new FileReader();
