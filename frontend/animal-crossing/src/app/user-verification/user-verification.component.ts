@@ -14,7 +14,7 @@ export class UserVerificationComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.handleUserAuthentication();
@@ -27,7 +27,7 @@ export class UserVerificationComponent implements OnInit {
         tap((tokenObj: string) => this.authenticationService.saveUserTokenCookie(tokenObj)),
         catchError((err) => this.userAuthenticationErrorHandling(err))
       )
-      .subscribe((params) => console.log(params));
+      .subscribe(() => { });
   }
 
   private userAuthenticationErrorHandling(error: Error) {

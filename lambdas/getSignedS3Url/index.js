@@ -6,7 +6,6 @@ const waterfall = require('async-waterfall');
 const { uuid } = require('uuidv4');
 
 function createBucket(bucketsList, callback) {
-    console.log('Inside createFucket');
     if (bucketsList.some(b => b['Name'] === bucketName)) {
         callback();
         return
@@ -17,15 +16,11 @@ function createBucket(bucketsList, callback) {
     }
 
     s3.createBucket(parameters, (error, data) => {
-        console.log('error, data', error, data);
-
         callback(error);
     });
 }
 
 function getSignedUlr(callback) {
-    console.log('Inside getSignedUrl');
-
     const key = uuid();
     const s3Params = {
         Bucket: bucketName,
@@ -39,9 +34,7 @@ function getSignedUlr(callback) {
 }
 
 function getAllS3Buckets(callback) {
-    console.log('In getAllS3')
     s3.listBuckets({}, (err, listOfBuckets) => {
-        console.log('In s3.listBuckets')
         callback(err, listOfBuckets);
     });
 }
