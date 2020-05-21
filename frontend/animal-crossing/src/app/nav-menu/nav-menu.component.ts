@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-nav-menu',
