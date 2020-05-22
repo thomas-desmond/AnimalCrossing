@@ -1,3 +1,8 @@
 exports.handler = (event, context, callback) => {
-   callback(null, event.cognitoData);
+    const userDate = {
+        userName: event.cognitoData.userName,
+        email: event.cognitoData.email,
+        email_verified: event.cognitoData.email_verified === 'true'
+    }
+    callback(null, userDate);
 };
