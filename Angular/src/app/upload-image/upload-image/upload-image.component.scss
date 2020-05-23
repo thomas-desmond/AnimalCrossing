@@ -6,8 +6,8 @@
 
 .image-preview {
     height: 250px;
-    width: 50%;
-    min-width: 255px;
+    width: 55%;
+    min-width: 300px;
     margin: 20px auto;
 }
 mat-card {
@@ -22,8 +22,8 @@ img {
 }
 
 mat-form-field {
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: .5rem;
+    margin-right: .5rem;
 }
 
 .file-upload-error {
