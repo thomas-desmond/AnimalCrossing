@@ -21,7 +21,7 @@ export class NavMenuComponent implements OnInit {
   }
 
   public login() {
-    window.location.href = 'https://animal-crossing.auth.us-east-1.amazoncognito.com/login?client_id=3l8tlpgkpkqo5n6nrivqeklt8r&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:4200/user-verify'
+    this.authenticationService.login();
   }
 
   public logout() {
