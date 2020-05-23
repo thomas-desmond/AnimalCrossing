@@ -14,7 +14,6 @@ export class NavMenuComponent implements OnInit {
 
   constructor(
     public authenticationService: AuthenticationService,
-    private router: Router,
   ) { }
 
   ngOnInit(): void {
