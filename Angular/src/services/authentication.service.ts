@@ -59,6 +59,17 @@ export class AuthenticationService {
     this.setupUserInfo();
   }
 
+  public login() {
+    window.location.href = environment.loginUrl.replace('$BASE_URL$', this.getBaseUrl());
+  }
+
+  private getBaseUrl(): string {
+    const location = window.location;
+    var baseUrl = location.protocol + "//" + location.host;
+
+    return baseUrl;
+  }
+
   public logout() {
     this.cookieService.delete(Constants.cookieTokenName);
     this.router.navigate(['/']);
