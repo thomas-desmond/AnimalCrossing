@@ -17,7 +17,7 @@ export class NavMenuComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.isAuthenticated = this.authenticationService.isAuthenticated.asObservable()
+    this.isAuthenticated = this.authenticationService.isAuthenticated$.asObservable()
   }
 
   public login() {
