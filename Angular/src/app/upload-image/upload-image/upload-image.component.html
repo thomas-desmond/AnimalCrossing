@@ -12,15 +12,25 @@
     <mat-card>
         <mat-card-content>
             <mat-card-title>Image Info</mat-card-title>
-            <form class="upload-form" [formGroup]="uploadImageForm">
+            <form class="upload-form" [formGroup]="uploadImageForm" *ngIf="designTypes$ | async as designTypes">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Design Type</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let designType of designTypes" [value]="designType.designId">
+                            {{designType.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
                 <mat-form-field appearance="outline">
                     <mat-label>Title</mat-label>
-                    <input matInput>
+                    <input matInput placeholder="Awesome Design">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
                     <mat-label>Design Code</mat-label>
-                    <input matInput>
+                    <input matInput placeholder="XX-XXXX-XXXX-XXXX">
                 </mat-form-field>
 
             </form>

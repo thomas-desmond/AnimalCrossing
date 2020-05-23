@@ -5,17 +5,42 @@ import { s3SignedUrl } from '../app/models/s3SignedUrl';
 import { environment } from '../environments/environment'
 import { CookieService } from 'ngx-cookie-service';
 import { Constants } from '../app/constants/constants';
+import { DesignType } from 'src/app/models/DesignType';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadImageService {
+
+  public designTypes$: Observable<DesignType[]>
+
   private getS3SignedUrlEndpoint = environment.apigatewayBaseUrl + '/get-signed-s3-url';
 
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
-  ) { }
+  ) {
+    this.setupDesignTypes()
+  }
+
+  private setupDesignTypes() {
+    const hardcodedDesignTypes: DesignType[] = [
+      new DesignType(1, 'Balloon-hem dress'),
+      new DesignType(2, 'Brimmed Cap'),
+      new DesignType(3, 'Coat'),
+      new DesignType(4, 'Brimmed Hat'),
+    ];
+
+    this.designTypes$ = of(hardcodedDesignTypes).pipe(
+      map(dt => this.organizeByProperty(dt, 'name'))
+    );
+  }
+
+  private organizeByProperty(designArray: DesignType[], property: string) {
+    return designArray.sort((a, b) => (a[property] > b[property]) ? 1 : -1)
+
+  }
 
   private getSignedS3Url(): Observable<any> {
     const token = this.cookieService.get(Constants.cookieTokenName);
@@ -29,7 +54,7 @@ export class UploadImageService {
   }
 
   public uploadImage(image: File) {
-    this.getSignedS3Url().subscribe(s3Url => {   
+    this.getSignedS3Url().subscribe(s3Url => {
       this.uploadToS3(s3Url.signedUrl, this.renameImageToMatchSignedUrlKey(image, s3Url)).subscribe();
     })
   }
