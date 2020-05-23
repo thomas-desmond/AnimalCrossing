@@ -1,21 +1,32 @@
-
-.upload-form{
+.upload-form {
     text-align: center;
     width: 90%;
-    margin:auto;
+    margin: auto;
 }
 
-.image-preview{
+.image-preview {
     height: 250px;
     width: 50%;
+    min-width: 255px;
     margin: 20px auto;
 }
+mat-card {
+    min-width: 255px;
+    width: 50%;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.25);
+}
 
-img{
+img {
     width: 100%;
 }
 
-.file-upload-error{
+mat-form-field {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.file-upload-error {
     text-align: center;
     color: red;
 }
@@ -26,6 +37,7 @@ img{
     background-size: 100px;
     background-position: center;
     width: 50%;
+    min-width: 255px;
     margin: 20px auto;
     border: 2px dashed green;
     border-radius: 10px;
@@ -35,4 +47,10 @@ img{
     cursor: pointer;
     background-color: #9ecbec !important;
     opacity: 0.8;
+}
+
+.upload-button{
+    background-color: green;
+    color: white;
+    margin: 1rem;
 }

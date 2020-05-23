@@ -1,15 +1,38 @@
-<div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)" [style.height]="fileToUpload ? '100px' : '250px'">
-    <input hidden type="file" #fileInput id="fileInput" (change)="handleFileInput($event.target.files)" [accept]="supportedExstensions.join(',')">
+<div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)"
+    [style.height]="fileToUpload ? '100px' : '250px'">
+    <input hidden type="file" #fileInput id="fileInput" (change)="handleFileInput($event.target.files)"
+        [accept]="supportedExstensions.join(',')">
 </div>
 
 <h4 class="file-upload-error" *ngIf="tooManyFilesSelected">Too many files selected</h4>
 <h4 class="file-upload-error" *ngIf="unsupportedFile">File extension not supported</h4>
 
-<div class="image-preview" *ngIf="fileToUpload">
-    <img id="uploadPreview"/>
+
+<div *ngIf="fileToUpload">
+    <mat-card>
+        <mat-card-content>
+            <mat-card-title>Image Info</mat-card-title>
+            <form class="upload-form" [formGroup]="uploadImageForm">
+                <mat-form-field appearance="outline">
+                    <mat-label>Title</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Design Code</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+            </form>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-flat-button class="upload-button">Upload</button>
+        </mat-card-actions>
+    </mat-card>
+
 </div>
-
-<form class="upload-form" *ngIf="fileToUpload" [formGroup]="uploadImageForm">
-    <div></div>
-
-</form>
+<div class="image-preview" *ngIf="fileToUpload">
+    <img id="uploadPreview" />
+</div>
