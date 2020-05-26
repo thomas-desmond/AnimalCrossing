@@ -3,6 +3,8 @@ import { UploadImageService } from 'src/services/upload-image.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Directive, Output, Input, EventEmitter, HostBinding } from '@angular/core';
 import { ChildActivationStart } from '@angular/router';
+import { Observable } from 'rxjs';
+import { DesignType } from 'src/app/models/DesignType';
 
 @Component({
   selector: 'app-upload-image',
@@ -22,6 +24,8 @@ export class UploadImageComponent implements OnInit {
     '.png'
   ];
 
+  public designTypes$: Observable<DesignType[]>;
+
   constructor(
     private fb: FormBuilder,
     private uploadImageService: UploadImageService
@@ -29,6 +33,7 @@ export class UploadImageComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
+    this.designTypes$ = this.uploadImageService.designTypes$;
   }
 
   @Output() onFileDropped = new EventEmitter<any>();
