@@ -3,3 +3,6 @@ lambdas/getSignedS3Url/package-lock.json
 lambdas/getSignedS3Url/getSignedS3Url.zip
 lambdas/verifyUserToken/node_modules/
 lambdas/verifyUserTokenPy/package/
+lambdas/getUserDataFromCognitoToken/node_modules/
+*.zip
+frontend/animal-crossing/node_modules/

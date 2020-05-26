@@ -17,10 +17,7 @@ export class UploadImageService {
     private cookieService: CookieService,
   ) { }
 
-    // Validate user token
-
   private getSignedS3Url(): Observable<any> {
-
     const token = this.cookieService.get(Constants.cookieTokenName);
     const requestOptions = {
       headers: new HttpHeaders({
@@ -30,7 +27,6 @@ export class UploadImageService {
 
     return this.http.get<s3SignedUrl>(this.getS3SignedUrlEndpoint, requestOptions);
   }
-
 
   public uploadImage(image: File) {
     this.getSignedS3Url().subscribe(s3Url => {   
