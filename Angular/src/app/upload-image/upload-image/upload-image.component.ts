@@ -57,7 +57,9 @@ export class UploadImageComponent implements OnInit {
 
   private buildForm() {
     this.uploadImageForm = this.fb.group({
-      imageName: new FormControl('', [Validators.required]),
+      imageTitle: new FormControl('', [Validators.required]),
+      designCode: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required, Validators.maxLength(250)]),
       tooManyFiles: new FormControl(false, [Validators.required])
     });
   }

@@ -1,3 +1,5 @@
+<h2 class="page-title">Upload Your Custom Design</h2>
+
 <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)"
     [style.height]="fileToUpload ? '100px' : '250px'">
     <input hidden type="file" #fileInput id="fileInput" (change)="handleFileInput($event.target.files)"
@@ -25,13 +27,18 @@
 
                 <mat-form-field appearance="outline">
                     <mat-label>Title</mat-label>
-                    <input matInput placeholder="Awesome Design">
+                    <input matInput placeholder="Awesome Design" formControlName="imageTitle">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
                     <mat-label>Design Code</mat-label>
-                    <input matInput placeholder="XX-XXXX-XXXX-XXXX">
+                    <input matInput placeholder="XX-XXXX-XXXX-XXXX" formControlName="designCode">
                 </mat-form-field>
+                <mat-form-field id='description-input' appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput formControlName="description" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5></textarea>
+                </mat-form-field>
+                <h4 class="file-upload-error" *ngIf="uploadImageForm.controls.description.touched && uploadImageForm.controls.description.invalid">Sorry, the description can only be 250 characters</h4>
 
             </form>
 
