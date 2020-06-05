@@ -7,6 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Constants } from '../app/constants/constants';
 import { DesignType } from 'src/app/models/DesignType';
 import { map } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class UploadImageService {
   public designTypes$: Observable<DesignType[]>
 
   private getS3SignedUrlEndpoint = environment.apigatewayBaseUrl + '/get-signed-s3-url';
+  private saveImageMetadataUrlEndpoint = environment.apigatewayBaseUrl + '/save-image-meta-data';
 
   constructor(
     private http: HttpClient,
@@ -43,21 +45,19 @@ export class UploadImageService {
   }
 
   private getSignedS3Url(): Observable<any> {
-    const token = this.cookieService.get(Constants.cookieTokenName);
-    const requestOptions = {
-      headers: new HttpHeaders({
-        'Authorization': token
-      }),
-    };
+    const requestOptions = this.createRequestOptionsWithAuthToken();
 
     return this.http.get<s3SignedUrl>(this.getS3SignedUrlEndpoint, requestOptions);
   }
 
-  public uploadImage(image: File) {
+  public uploadImage(image: File, userCompletedForm: FormGroup) {
     this.getSignedS3Url().subscribe(s3Url => {
-      this.uploadToS3(s3Url.signedUrl, this.renameImageToMatchSignedUrlKey(image, s3Url)).subscribe();
+      this.uploadToS3(s3Url.signedUrl, this.renameImageToMatchSignedUrlKey(image, s3Url)).subscribe(() => {        
+        this.saveImageMetaData(userCompletedForm).subscribe();
+      });
     })
   }
+
 
   private renameImageToMatchSignedUrlKey(image: File, s3Url: any) {
     const blob = image.slice(0, image.size, 'image/jpeg');
@@ -77,5 +77,28 @@ export class UploadImageService {
       }
     }
     return this.http.put<any>(signedUrl, image, headers)
+  }
+
+  private saveImageMetaData(userCompletedForm: FormGroup) {
+    const requestOptions = this.createRequestOptionsWithAuthToken();
+
+    const serializedImageFormData = this.convertFormToJson(userCompletedForm);
+    return this.http.post(this.saveImageMetadataUrlEndpoint, serializedImageFormData, requestOptions);
+  }
+
+  private convertFormToJson(userCompletedForm: FormGroup) {
+    const formObj = userCompletedForm.getRawValue();
+    const serializedForm = JSON.stringify(formObj);
+    return serializedForm;
+  }
+
+  private createRequestOptionsWithAuthToken() {
+    const token = this.cookieService.get(Constants.cookieTokenName);
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Authorization': token
+      }),
+    };
+    return requestOptions;
   }
 }

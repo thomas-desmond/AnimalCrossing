@@ -116,6 +116,6 @@ export class UploadImageComponent implements OnInit {
   }
 
   public uploadImage() {
-    this.uploadImageService.uploadImage(this.fileToUpload);
+    this.uploadImageService.uploadImage(this.fileToUpload, this.uploadImageForm);
   }
 }
