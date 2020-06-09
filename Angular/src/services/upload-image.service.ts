@@ -8,6 +8,7 @@ import { Constants } from '../app/constants/constants';
 import { DesignType } from 'src/app/models/DesignType';
 import { map } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
+import { ImageMetadata } from 'src/app/models/ImageMetadata';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ import { FormGroup } from '@angular/forms';
 export class UploadImageService {
 
   public designTypes$: Observable<DesignType[]>
+  private imageMetadata = new ImageMetadata();
 
   private getS3SignedUrlEndpoint = environment.apigatewayBaseUrl + '/get-signed-s3-url';
   private saveImageMetadataUrlEndpoint = environment.apigatewayBaseUrl + '/save-image-meta-data';
@@ -41,7 +43,6 @@ export class UploadImageService {
 
   private organizeByProperty(designArray: DesignType[], property: string) {
     return designArray.sort((a, b) => (a[property] > b[property]) ? 1 : -1)
-
   }
 
   private getSignedS3Url(): Observable<any> {
@@ -51,13 +52,25 @@ export class UploadImageService {
   }
 
   public uploadImage(image: File, userCompletedForm: FormGroup) {
+   
+    this.imageMetadata.uploadDate = new Date(Date.now()).toISOString();
+
     this.getSignedS3Url().subscribe(s3Url => {
-      this.uploadToS3(s3Url.signedUrl, this.renameImageToMatchSignedUrlKey(image, s3Url)).subscribe(() => {        
-        this.saveImageMetaData(userCompletedForm).subscribe();
+      this.imageMetadata.imageGuid = s3Url.key;
+      this.uploadToS3(s3Url.signedUrl, this.renameImageToMatchSignedUrlKey(image, s3Url)).subscribe(() => {
+        this.fillInMetadataBasedOnUserForm(userCompletedForm); // TODO: This seems shitty, need more automatic way to take image upload form and turn it into Dynamo object
+        console.log(this.imageMetadata);    
+        this.saveImageMetaData(this.imageMetadata).subscribe();
       });
     })
   }
 
+  fillInMetadataBasedOnUserForm(userForm: FormGroup): ImageMetadata {
+    this.imageMetadata.imageDescription = userForm.get('description').value;
+    this.imageMetadata.designCode = userForm.get('designCode').value;
+    this.imageMetadata.title = userForm.get('title').value;
+    return this.imageMetadata;
+  }
 
   private renameImageToMatchSignedUrlKey(image: File, s3Url: any) {
     const blob = image.slice(0, image.size, 'image/jpeg');
@@ -79,11 +92,10 @@ export class UploadImageService {
     return this.http.put<any>(signedUrl, image, headers)
   }
 
-  private saveImageMetaData(userCompletedForm: FormGroup) {
+  private saveImageMetaData(imageMetadata: ImageMetadata) {
     const requestOptions = this.createRequestOptionsWithAuthToken();
 
-    const serializedImageFormData = this.convertFormToJson(userCompletedForm);
-    return this.http.post(this.saveImageMetadataUrlEndpoint, serializedImageFormData, requestOptions);
+    return this.http.post(this.saveImageMetadataUrlEndpoint, JSON.stringify(imageMetadata), requestOptions);
   }
 
   private convertFormToJson(userCompletedForm: FormGroup) {

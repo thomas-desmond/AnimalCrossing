@@ -9,8 +9,20 @@ exports.handler = (event, context, callback) => {
                 S: event.imageGuid
             },
             "user-id": {
-                S: event.userId
-            }
+                S: "unknown"
+            },
+            "title": {
+                S: event.title
+            },
+            "designCode": {
+                S: event.designCode
+            },
+            "description": {
+                S: event.imageDescription
+            },
+            "uploadDate": {
+                S: event.uploadDate
+            },
         }
     }, function(err, data) {
         if (err) {
