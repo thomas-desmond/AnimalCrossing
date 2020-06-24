@@ -6,3 +6,5 @@ lambdas/verifyUserTokenPy/package/
 lambdas/getUserDataFromCognitoToken/node_modules/
 *.zip
 frontend/animal-crossing/node_modules/
+lambda-layer/dbConnectionService/databaseConstants.js
+lambda-layer/dbConnectionService/node_modules/
